@@ -1,0 +1,28 @@
+{
+  "intents": [
+    {
+      "intent": "GetCompany",
+      "slots": [
+        {
+          "name": "Company",
+          "type": "LIST_OF_COMPANIES"
+        }
+      ]
+    },
+    {
+      "intent": "GetAllLeads"
+    },
+    {
+      "intent": "GetOpenLeads"
+    },
+    {
+      "intent": "GetWorkLeads"
+    },
+    {
+      "intent": "GetClosedLeads"
+    },    
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}
