@@ -10,6 +10,15 @@
       ]
     },
     {
+      "intent": "GetNumberFromList",
+      "slots": [
+        {
+          "name": "Number",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    },    
+    {
       "intent": "GetAllLeads"
     },
     {

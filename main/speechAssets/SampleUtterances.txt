@@ -3,3 +3,4 @@ GetOpenLeads get open leads
 GetWorkLeads get work leads
 GetClosedLeads get closed leads
 AMAZON.HelpIntent help
+GetNumberFromList get company {Number}
