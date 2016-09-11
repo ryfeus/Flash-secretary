@@ -136,7 +136,7 @@ HelloWorld.prototype.intentHandlers = {
                 var numCount = 0;
                 var strSpeech = ""
                 for (var i = 0; i < res.length; i++) {
-                    if (res[i].COMPANY == intent.slots.Company.value) {
+                    if (res[i].COMPANY.toUpperCase() == intent.slots.Company.value.toUpperCase()) {
                         strSpeech = strSpeech + "Company " + res[i].COMPANY + ". ";
                         strSpeech = strSpeech + "Point of contact is  " + res[i].SYS_NAME + ", " + res[i].TITLE + ". ";
                         strSpeech = strSpeech + "Contact phone is " + res[i].PHONE + ". ";
@@ -182,7 +182,7 @@ HelloWorld.prototype.intentHandlers = {
                 var body = Buffer.concat(chunks);
                 var res = JSON.parse(body).d.results;
                 var numCount = 0;
-                var strSpeech = "Companies are "
+                var strSpeech = "Companies are ";
                 for (var i = 0; i < res.length; i++) {
                     numCount = numCount + 1;
                     strSpeech = strSpeech + res[i].COMPANY + ", ";
@@ -224,15 +224,18 @@ HelloWorld.prototype.intentHandlers = {
             res.on("end", function() {
                 var body = Buffer.concat(chunks);
                 var res = JSON.parse(body).d.results;
-                var str = "Companies are "
+                var strSpeech = "Companies are ";
+                var numCount = 0;
                 for (var i = 0; i < res.length; i++) {
                     if (res[i].STATUS == "Open - Not Contacted") {
-                        str = str + res[i].COMPANY + ", ";
+                        strSpeech = strSpeech + res[i].COMPANY + ", ";
+                        numCount = numCount + 1;
                     }
                     // console.log(res[i].COMPANY);
                 }
-                console.log(str);
-                response.tellWithCard(str, "Hello World2", "Hello World!3");
+                strSpeech = "Total number of open leads is " + numCount + ". " + strSpeech;
+                console.log(strSpeech);
+                response.tellWithCard(strSpeech, "Hello World2", "Hello World!3");
             });
         });
 
@@ -266,13 +269,18 @@ HelloWorld.prototype.intentHandlers = {
             res.on("end", function() {
                 var body = Buffer.concat(chunks);
                 var res = JSON.parse(body).d.results;
-                var str = "Companies are "
+                var strSpeech = "Companies are ";
+                var numCount = 0;
                 for (var i = 0; i < res.length; i++) {
-                    str = str + res[i].COMPANY + ", ";
+                    if (res[i].STATUS == "Working - Contacted") {
+                        strSpeech = strSpeech + res[i].COMPANY + ", ";
+                        numCount = numCount + 1;
+                    }
                     // console.log(res[i].COMPANY);
                 }
-                console.log(str);
-                response.tellWithCard(str, "Hello World2", "Hello World!3");
+                console.log(strSpeech);
+                strSpeech = "Total number of work leads is " + numCount + ". " + strSpeech;
+                response.tellWithCard(strSpeech, "Hello World2", "Hello World!3");
             });
         });
 
@@ -306,13 +314,18 @@ HelloWorld.prototype.intentHandlers = {
             res.on("end", function() {
                 var body = Buffer.concat(chunks);
                 var res = JSON.parse(body).d.results;
-                var str = "Companies are "
+                var strSpeech = "Companies are ";
+                var numCount = 0;
                 for (var i = 0; i < res.length; i++) {
-                    str = str + res[i].COMPANY + ", ";
+                    if ((res[i].STATUS == "Closed - Not Converted") | (res[i].STATUS == "Closed - Converted")) {
+                        strSpeech = strSpeech + res[i].COMPANY + ", ";
+                        numCount = numCount + 1;
+                    }
                     // console.log(res[i].COMPANY);
                 }
-                console.log(str);
-                response.tellWithCard(str, "Hello World2", "Hello World!3");
+                console.log(strSpeech);
+                strSpeech = "Total number of closed leads is " + numCount + ". " + strSpeech;
+                response.tellWithCard(strSpeech, "Hello World2", "Hello World!3");
             });
         });
 
@@ -322,6 +335,65 @@ HelloWorld.prototype.intentHandlers = {
 
         // response.tellWithCard("Leads, leads, leads, leads, leads, leads, leads,", "Hello World2", "Hello World!3");
     },
+    "GetLeadsStatus": function(intent, session, response) {
+        var options = {
+            "method": "GET",
+            "hostname": "service.datadirectcloud.com",
+            "port": null,
+            "path": "/api/odata/Salesforce/LEADS",
+            "headers": {
+                "accept": "application/json",
+                "authorization": "Basic YWt1ZHJ5YToxMjNxd2VBU0Q=",
+                "cache-control": "no-cache",
+                "postman-token": "ff21fe29-ce7b-4e42-e645-388ad5858f10"
+            }
+        };
+
+        var req = http.request(options, function(res) {
+            var chunks = [];
+
+            res.on("data", function(chunk) {
+                chunks.push(chunk);
+            });
+
+            res.on("end", function() {
+                var body = Buffer.concat(chunks);
+                var res = JSON.parse(body).d.results;
+                var strSpeech = "Current status of leads. ";
+                var numCountOpen = 0;
+                var numCountWork = 0;
+                var numCountConverted = 0;
+                var numCountNonConverted = 0;
+                for (var i = 0; i < res.length; i++) {
+                    if (res[i].STATUS == "Open - Not Contacted") {
+                        numCountOpen = numCountOpen + 1;
+                    }
+                    if (res[i].STATUS == "Working - Contacted") {
+                        numCountWork = numCountWork + 1;
+                    }
+                    if (res[i].STATUS == "Closed - Converted") {
+                        numCountConverted = numCountConverted + 1;
+                    }
+                    if (res[i].STATUS == "Closed - Not Converted") {
+                        numCountNonConverted = numCountNonConverted + 1;
+                    }
+                }
+                strSpeech = strSpeech + "We have " + numCountOpen + " open leads";
+                strSpeech = strSpeech + ", " + numCountWork + " work leads";
+                strSpeech = strSpeech + ", " + numCountConverted + " converted leads";
+                strSpeech = strSpeech + ", " + numCountNonConverted + " non converted leads.";
+                console.log(strSpeech);
+                response.tellWithCard(strSpeech, "Hello World2", "Hello World!3");
+            });
+        });
+
+        req.end();
+
+
+
+        // response.tellWithCard("Leads, leads, leads, leads, leads, leads, leads,", "Hello World2", "Hello World!3");
+    },
+
     "AMAZON.HelpIntent": function(intent, session, response) {
         response.ask("You can say hello to me!", "You can say hello to me!");
     }

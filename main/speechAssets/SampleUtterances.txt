@@ -1,6 +1,10 @@
+GetCompany get info about {Company}
 GetAllLeads get all leads
 GetOpenLeads get open leads
 GetWorkLeads get work leads
 GetClosedLeads get closed leads
-AMAZON.HelpIntent help
 GetNumberFromList get company {Number}
+GetLeadsStatus get status on leads
+GetLeadsStatus status on leads
+GetLeadsStatus leads status
+AMAZON.HelpIntent help
