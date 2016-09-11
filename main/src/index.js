@@ -108,6 +108,57 @@ HelloWorld.prototype.intentHandlers = {
 
         // response.tellWithCard("Leads, leads, leads, leads, leads, leads, leads,", "Hello World2", "Hello World!3");
     },
+    "GetSpecCompany": function(intent, session, response) {
+        var options = {
+            "method": "GET",
+            "hostname": "service.datadirectcloud.com",
+            "port": null,
+            "path": "/api/odata/Salesforce/LEADS",
+            "headers": {
+                "accept": "application/json",
+                "authorization": "Basic YWt1ZHJ5YToxMjNxd2VBU0Q=",
+                "cache-control": "no-cache",
+                "postman-token": "ff21fe29-ce7b-4e42-e645-388ad5858f10"
+            }
+        };
+
+        var req = http.request(options, function(res) {
+            var chunks = [];
+
+            res.on("data", function(chunk) {
+                chunks.push(chunk);
+            });
+
+            res.on("end", function() {
+                var body = Buffer.concat(chunks);
+                var res = JSON.parse(body).d.results;
+                var numCount = 0;
+                var strSpeech = ""
+
+                i = 2
+                strSpeech = strSpeech + "Company " + res[i].COMPANY + ". ";
+                strSpeech = strSpeech + "Point of contact is  " + res[i].SYS_NAME + ", " + res[i].TITLE + ". ";
+                strSpeech = strSpeech + "Contact phone is " + res[i].PHONE + ". ";
+                strSpeech = strSpeech + "Current status is " + res[i].STATUS + ". ";
+                strSpeech = strSpeech + "The source of the lead is " + res[i].LEADSOURCE + ". ";
+                strSpeech = strSpeech + "They are interested in " + res[i].PRODUCTINTEREST + ". ";
+
+                // console.log(res[i].COMPANY);
+
+                console.log(strSpeech);
+                response.tellWithCard(strSpeech, "Hello World2", "Hello World!3");
+            });
+        });
+
+        req.end();
+
+
+
+        // response.tellWithCard("Leads, leads, leads, leads, leads, leads, leads,", "Hello World2", "Hello World!3");
+    },
+
+
+
     // register custom intent handlers
     "GetCompany": function(intent, session, response) {
         var options = {

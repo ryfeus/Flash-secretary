@@ -35,6 +35,9 @@
     },    
     {
       "intent": "GetLeadsStatus"
-    }    
+    },    
+    {
+      "intent": "GetSpecCompany"
+    }     
   ]
 }

@@ -1,4 +1,5 @@
 GetCompany get info about {Company}
+GetSpecCompany get Greenwich Media
 GetAllLeads get all leads
 GetOpenLeads get open leads
 GetWorkLeads get work leads
