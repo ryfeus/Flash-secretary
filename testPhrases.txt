@@ -1,0 +1,15 @@
+get info about {Company}
+get Greenwich Media
+get all leads
+get open leads
+get work leads
+get closed leads
+get company {Number}
+get status on leads
+status on leads
+leads status
+help
+
+status on leads
+get open leads
+get Greenwich Media
