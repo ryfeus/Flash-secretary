@@ -1,8 +1,7 @@
-# Sample AWS Lambda function for Alexa
-A simple [AWS Lambda](http://aws.amazon.com/lambda) function that demonstrates how to write a skill for the Amazon Echo using the Alexa SDK.
+# Flash secretary for Alexa
 
 ## Concepts
-This simple sample has no external dependencies or session management, and shows the most basic example of how to create a Lambda function for handling Alexa Skill requests.
+Flash-secretary makes meetings more productive. It make checking a CRM easier. One just tells Alexa what to show and it tells or shows on a screen the list of all necessary objects (e.g. leads for the last month).
 
 ## Setup
 To run this example skill you need to do two things. The first is to deploy the example code in lambda, and the second is to configure the Alexa skill to use Lambda.
@@ -11,7 +10,7 @@ To run this example skill you need to do two things. The first is to deploy the 
 1. Go to the AWS Console and click on the Lambda link. Note: ensure you are in us-east or you won't be able to use Alexa with Lambda.
 2. Click on the Create a Lambda Function or Get Started Now button.
 3. Skip the blueprint
-4. Name the Lambda Function "Hello-World-Example-Skill".
+4. Name the Lambda Function "FlashSecretary".
 5. Select the runtime as Node.js
 5. Go to the the src directory, select all files and then create a zip file, make sure the zip file does not contain the src directory itself, otherwise Lambda function will not work.
 6. Select Code entry type as "Upload a .ZIP file" and then upload the .zip file to the Lambda
@@ -25,7 +24,7 @@ To run this example skill you need to do two things. The first is to deploy the 
 
 ### Alexa Skill Setup
 1. Go to the [Alexa Console](https://developer.amazon.com/edw/home.html) and click Add a New Skill.
-2. Set "HelloWorld" as the skill name and "hello world" as the invocation name, this is what is used to activate your skill. For example you would say: "Alexa, tell Hello World to say hello"
+2. Set "FlashSecretary" as the skill name and "FlashSecretary" as the invocation name, this is what is used to activate your skill. For example you would say: "Alexa, ask FlashSecretary get leads"
 3. Select the Lambda ARN for the skill Endpoint and paste the ARN copied from above. Click Next.
 4. Copy the Intent Schema from the included IntentSchema.json.
 5. Copy the Sample Utterances from the included SampleUtterances.txt. Click Next.
@@ -36,5 +35,9 @@ To run this example skill you need to do two things. The first is to deploy the 
 9. Your skill is now saved and once you are finished testing you can continue to publish your skill.
 
 ## Examples
-    User: "Alexa, tell Hello World to say hello"
-    Alexa: "Hello World!"
+
+    User: "Alexa, ask flashsecretary status on leads"
+    User: "Alexa, ask flashsecretary get open leads"
+    User: "Alexa, ask flashsecretary get Greenwich Media"
+   
+   
