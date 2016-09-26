@@ -156,10 +156,6 @@ HelloWorld.prototype.intentHandlers = {
 
         // response.tellWithCard("Leads, leads, leads, leads, leads, leads, leads,", "Hello World2", "Hello World!3");
     },
-
-
-
-    // register custom intent handlers
     "GetCompany": function(intent, session, response) {
         var options = {
             "method": "GET",
@@ -444,7 +440,6 @@ HelloWorld.prototype.intentHandlers = {
 
         // response.tellWithCard("Leads, leads, leads, leads, leads, leads, leads,", "Hello World2", "Hello World!3");
     },
-
     "AMAZON.HelpIntent": function(intent, session, response) {
         response.ask("You can say hello to me!", "You can say hello to me!");
     }
